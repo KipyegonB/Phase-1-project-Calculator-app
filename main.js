@@ -1,34 +1,26 @@
-const init=()=>{
-    // function Evaluate(str){
-    //     return eval(str)
-     
-    // }
-    document.getElementById('comment_form').addEventListener('submit', post)
-    function post(e){
-        e.preventDefault()
-        console.log(e.target)
-        let comment={
-            comment:e.target.input_comment.value
-        }
-        postComment(comment)
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('comment_form').addEventListener('submit', postComment)
+  });
+  function postComment(e) {
+    e.preventDefault()
+    let postedComment = {
+      content: e.target.input_comment.value,
     }
-    function postComment(commentSent){
-        fetch('http://localhost:3000/comments',{
-            method:'POST',
-        headers:{
-            'Conntent-Type':'application/json',
-            Accept:'application/json'
+    postToJson(postedComment)
+
+  }
+  function postToJson(postedComment) {
+    return fetch('http://localhost:3000/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-        body:JSON.stringify(commentSent)
-        })
-        .then(response=>response.json())
-        .then(data=>console.log(data))
-    }
-    }
-    
-    
-    
-    document.addEventListener('DOMContentLoaded', init)
+        body: JSON.stringify(postedComment)
+      })
+      .then(response => response.json())
+      .then(comment => console.log(comment))
+  }
     
     
     
